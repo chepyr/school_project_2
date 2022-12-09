@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+
+<!--
+<script>
+window.addEventListener('load', function() {
+    var image = document.getElementById('graph');
+        var images = ['../static/images/cat.png', '../static/images/dog.jpg'];
+        var a = 0;
+
+        function SetImage() {
+            if (a == 0) {
+                image.setAttribute('src', images[0]);
+                a = 1;
+            } else {
+                image.setAttribute('src', images[1]);
+                a = 0;
+            }
+
+        }
+
+        setInterval(SetImage, 2000);
+});
+
+</script>
+-->
+<script>
+     function addPoint(e) {
+        var rect = e.target.getBoundingClientRect();
+        var x = Math.round(e.clientX - rect.left);
+        var y = Math.round(e.clientY - rect.top);
+        var coords = "(" + x + "; " + y + ")\n";
+        document.getElementById("form_input_points").value += coords;
+
+        const canvas = document.getElementById('clickPoint');
+        const context = canvas.getContext('2d');
+
+        context.beginPath();
+        context.arc(x, y, 5, 0, 2 * Math.PI, false);
+        context.fillStyle = 'red';
+        context.fill();
+    }
+
+
+
+</script>
+{% endblock %}
+
+{% block content %}
+
+<!--
+<img src="" id="graph" class="rounded mx-auto d-block" alt="cat">
+-->
+<div class="text-center">
+    <canvas id="clickPoint" onclick="addPoint(event)" width="500" height="300" style="border:1px solid #000000;">
+    </canvas>
+</div>
+
+<p id="demo"></p>
+
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.points.label }}<br>
+        {{ form.points(class="form-control", id="form_input_points", type="text", autocomplete="off", rows="10" ) }}
+
+        {% for error in form.points.errors %}
+    <p class="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p >
+    <p>{{ form.submit(type="submit", class="btn btn-dark") }}</p>
+</form>
+
+{% endblock %}
