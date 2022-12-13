@@ -5,4 +5,4 @@ from wtforms.validators import DataRequired
 
 class GetPointsForm(FlaskForm):
     points = TextAreaField('Точки', validators=[DataRequired()])
-    submit = SubmitField('Добавить')
+    submit = SubmitField('Найти')

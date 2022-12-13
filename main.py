@@ -12,17 +12,24 @@ def main():
     return render_template('main.html')
 
 
-@app.route('/shortest_path', methods=['GET', 'POST'])
+@app.route('/tsp_try', methods=['GET', 'POST'])
 def shortest_path():
     form = GetPointsForm()
     if form.is_submitted():
         points = form.points.data
-        return render_template("shortest_path_get.html")
+        return redirect('/tsp_try/result')
     else:
-        return render_template('for_tests.html', form=form)
+        return render_template('tsp_try.html', form=form)
 
 
+@app.route('/tsp')
+def tcp_try():
+    return render_template('tsp.html')
 
+
+@app.route('/tsp_try/result')
+def tcp_result():
+    return render_template('tsp_try_result.html')
 
 
 if __name__ == '__main__':
